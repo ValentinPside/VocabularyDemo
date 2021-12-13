@@ -6,16 +6,18 @@ import java.util.*;
 
 public class TextExecutor {
 
+    private String report1 = "";
+    private String report2 = "";
+
     public TextExecutor(String fileName) throws IOException {
         if(fileName == null)
-            throw new IllegalArgumentException("fileName can't be null.");
+            throw new IllegalArgumentException();
         divide(new File(fileName));
     }
 
     private void divide(File fileName) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(fileName));
         HashMap<String, Integer> vocabulary = new HashMap<>();
-
         String[] lines = br.lines().toArray(String[]::new);
         int wordsSum = 0;
 
@@ -33,10 +35,11 @@ public class TextExecutor {
                     vocabulary.put(w, 1);
                 }
                 else if(vocabulary.containsKey(w)){
-                    vocabulary.replace(w, vocabulary.get(w), vocabulary.get(w)+1);
+                    vocabulary.put(w, vocabulary.get(w)+1);
                 }
             }
         }
+        br.close();
 
         for(int i : vocabulary.values()){
             wordsSum = wordsSum + i;
@@ -52,16 +55,26 @@ public class TextExecutor {
             String b = decimalFormat.format(a);
             String text = "Слово " + "'" + i + "'" + " встречается в данном тексте " + vocabulary.get(i) + " раз;\n" +
                     "Относительная частота этого слова " + b + "\n";
-            try(FileWriter writer = new FileWriter("report1.txt", true)) {
-            writer.write(text);
-            }
-            catch(IOException ex){
-                System.out.println(ex.getMessage());
-            }
+            report1 += text;
+        }
+
+        String name = fileName.getName();
+        try(FileWriter writer = new FileWriter(name + " report1.txt", true)) {
+            writer.write(report1);
+        }
+        catch(IOException ex){
+            System.out.println(ex.getMessage());
         }
 
         Object[] sorted2 = sorted.entrySet().stream().sorted(Map.Entry.<Integer, Integer>comparingByValue().reversed()).toArray();
-        for(Object i : sorted2){
+
+        Object[] sorted3 = vocabulary.entrySet().toArray();
+
+        for (Object i : sorted3){
+            System.out.println(i);
+        }
+
+        for(Object i : sorted2) {
             String a = i.toString();
             a = a.replaceAll("[а-яё=]", "");
             double b = Double.parseDouble(a);
@@ -70,12 +83,13 @@ public class TextExecutor {
             String d = decimalFormat.format(c);
             String text = "Слово " + i + " повторения в данном тексте " + "\n" +
                     "Относительная частота этого слова " + d + "\n";
-            try(FileWriter writer = new FileWriter("report2.txt", true)) {
-                writer.write(text);
+            report2 += text;
+        }
+            try(FileWriter writer = new FileWriter(name + " report2.txt", true)) {
+                writer.write(report2);
             }
             catch(IOException ex){
                 System.out.println(ex.getMessage());
             }
-        }
     }
 }
