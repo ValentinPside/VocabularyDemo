@@ -1,11 +1,10 @@
-package ru.avalon.javapp.devj120.countrydemo;
+package ru.avalon.javapp.devj120.VocabularyDemo;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class FileNameHandler {
-
     private ArrayList<String> fileNamesList;
 
     public FileNameHandler(String[] fileNames) throws IOException {
@@ -27,5 +26,4 @@ public class FileNameHandler {
     public ArrayList<String> getFileNamesList() {
         return fileNamesList;
     }
-
 }

@@ -1,4 +1,4 @@
-package ru.avalon.javapp.devj120.countrydemo;
+package ru.avalon.javapp.devj120.VocabularyDemo;
 
 import java.io.IOException;
 
