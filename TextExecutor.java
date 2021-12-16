@@ -2,13 +2,10 @@ package ru.avalon.javapp.devj120.VocabularyDemo;
 
 import java.io.*;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.util.*;
 
 public class TextExecutor {
-    private HashMap<String, Integer> vocabulary = new HashMap<>();
+    private Map<String, Integer> vocabulary = new TreeMap<>();
     private int wordsSum = 0;
     ArrayList<FileWord> fileWords = new ArrayList<>();
     private String report1 = "";
@@ -59,7 +56,7 @@ public class TextExecutor {
 
     private void reportOne(String fileName){
 
-        Object[] sorted = vocabulary.keySet().stream().sorted().toArray();
+        Object[] sorted = vocabulary.keySet().toArray(new String[0]);
 
         for (Object i : sorted){
             double a = (double)vocabulary.get(i) / (double) wordsSum;
